@@ -12,6 +12,7 @@ import {
 import { Result } from "./Result";
 import correctType from "./assets/correctType.wav";
 import wrongType from "./assets/wrongType.mp3";
+
 function App() {
     const [start, setStart] = useState(false);
     const [para, setPara] = useState("");
@@ -26,7 +27,6 @@ function App() {
     const [typingEnd, setTypingEnd] = useState(false);
     const [isPageOpen, setPageOpen] = useState(false);
     const [isAudio, setIsAudio] = useState(true);
-
 
     const content = [
         "Amidst the rustling leaves of an ancient forest, a sense of timelessness pervades the air. Giant trees tower overhead, their branches interlocking to form a verdant canopy that blocks out the harsh rays of the sun. Shafts of light filter through the dense foliage, illuminating patches of moss-covered ground below. Birds flit amongst the branches, their song a sweet melody that echoes through the forest. As the wind whispers through the leaves, it carries with it the secrets of generations past, weaving together the intricate tapestry of life in the forest.",
@@ -124,7 +124,7 @@ function App() {
         }
     }, [error, characterCount]);
     useEffect(() => {
-        setWPM(Math.round(wordWritten));
+        if (timer < 59) setWPM(Math.round((60 / (60 - timer)) * wordWritten));
     }, [wordWritten, timer]);
 
     function textOutputAppend(ch) {
@@ -149,7 +149,8 @@ function App() {
     }
     return (
         <div>
-            <div className="grid md:grid-cols-12 grid-cols-1 ">
+            {/* <Navbar/> */}
+            <div className="grid md:grid-cols-12 grid-cols-1 bg-black ">
                 {isPageOpen && (
                     <Result
                         wpm={wpm}
@@ -161,7 +162,7 @@ function App() {
                 )}
 
                 {/* Left Part  */}
-                <div className="md:col-span-2  col-span-1 border-r-2  flex flex-col  items-center my-20 space-y-5 text-lg text-gray-500 text-center">
+                <div className="md:col-span-2  col-span-1 text-white border-r-2  flex flex-col  items-center my-20 space-y-5 text-lg text-center">
                     <div>
                         <h1>Total Words</h1>
                         <span className="text-4xl font-thin">{totalWords}</span>
@@ -188,12 +189,12 @@ function App() {
                 </div>
 
                 {/* Middle Part */}
-                <div className="md:col-span-8 col-span-1 mx-10 my-5 text-center font-sans ">
+                <div className="md:col-span-8 col-span-1 text-white mx-10 my-5 text-center font-sans ">
                     {/* Top Part  */}
                     <div className="space-y-1 my-7 text-xl">
-                        <p>Do you think you're really fast ? 🤔</p>
+                        <p>Do you think you&apos;re really fast ? 🤔</p>
                         <p>
-                            Let's test it out! Click on the
+                            Let&apos;s test it out&#33; Click on the
                             <span className="font-semibold"> start</span> button
                             below to begin the one-minute typing test and find
                             out!
@@ -215,7 +216,7 @@ function App() {
                                     <PlayCircleIcon
                                         strokeWidth={1}
                                         size={50}
-                                        className={`cursor-pointer rounded-full p-0 ${
+                                        className={`cursor-pointer rounded-full ${
                                             start &&
                                             "text-red-600 border-4 border-blue-400 cursor-not-allowed"
                                         }`}
@@ -225,19 +226,22 @@ function App() {
                             </div>
                         )}
                         <div>
-                            <button>
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    setTimeout(() => {
+                                        window.location.reload();
+                                    }, 600);
+                                }}
+                                className="active:rotate-[360deg] duration-700"
+                            >
                                 <RefreshCcw
                                     strokeWidth={1}
                                     size={50}
-                                    className={`cursor-pointer rounded-full p-1 active:rotate-[360deg]  transition-transform transform-cpu duration-500 ${
+                                    className={`cursor-pointer rounded-full p-1 ${
                                         typingEnd &&
                                         "text-red-600 border-4 border-blue-400"
                                     }`}
-                                    onClick={() => {
-                                        setTimeout(() => {
-                                            window.location.reload();
-                                        }, 600);
-                                    }}
                                 />
                             </button>
                             <p>Refresh</p>
@@ -245,15 +249,15 @@ function App() {
                     </div>
                     <div className="h-0.5 w-full bg-gray-200"></div>
                     {/* Infomration  */}
-                    <div className="text-sm text-gray-500 my-5">
-                        Just start typing and dont use Backslash to correct your
+                    <div className="text-sm text-gray-300 my-5">
+                        Just start typing and don&apos;t use Backslash to correct your
                         mistakes. Your mistakes will be marked and shown below
                         the writing box. Good luck!
                     </div>
                     {/* Input Part */}
-                    <div className="text-4xl overflow-x-hidden min-h-20 my-5 relative font-mono bg-gray-900/90 text-white overflow-y-hidden p-5">
+                    <div className="text-4xl overflow-x-hidden min-h-20 my-5 relative font-mono bg-gray-300 text-white overflow-y-hidden p-5">
                         <p
-                            className="whitespace-nowrap  tracking-widest text-start  "
+                            className="whitespace-nowrap text-black font-medium tracking-widest text-start  "
                             id="textInput"
                         >
                             {para.replace(/ /g, "\u00A0")}
@@ -268,11 +272,11 @@ function App() {
                     </div>
                     {/* Ouptut Part */}
                     <div
-                        className=" my-10 w-3/4 mx-auto bg-black min-h-40 text-left p-5 font-mono text-white break-words"
+                        className=" my-10 w-3/4 mx-auto bg-gray-800 min-h-40 text-left p-5 font-mono text-white break-words"
                         id="textOutput"
                     ></div>
                     <div className="h-0.5 w-full bg-gray-200"></div>
-                    <div className="text-start space-y-2 my-10">
+                    <div className="text-start space-y-2 my-10 ">
                         <p className="text-lg font-medium px-2">Notes:</p>
                         <ul>
                             <li>
@@ -321,14 +325,15 @@ function App() {
                     </div>
                     <div className="h-0.5 w-full bg-gray-300"></div>
                     <a
-                        href="https://twitter.com/nikhilthakur80" target="_blank"
+                        href="https://twitter.com/nikhilthakur80"
+                        target="_blank"
                         className="font-mono block pt-5 text-blue-500 hover:underline"
                     >
                         @nikhilThakur80
                     </a>
                 </div>
                 {/*Right Part  */}
-                <div className="md:col-span-2  col-span-1 border-l-2  flex flex-col  items-center my-20 space-y-5 text-lg text-gray-500 text-center">
+                <div className="md:col-span-2  col-span-1 border-l-2 text-white flex flex-col  items-center my-20 space-y-5 text-lg text-center">
                     <div>
                         <h1>Timer</h1>
                         <span className="text-4xl font-thin">
@@ -367,13 +372,13 @@ function App() {
                     {isAudio ? (
                         <Volume2Icon
                             size={40}
-                            className="border-2 rounded-full p-1 border-gray-600"
+                            className="border-2 rounded-full p-1 text-white border-white"
                             strokeWidth={1}
                         />
                     ) : (
                         <VolumeX
                             size={40}
-                            className="border-2 rounded-full p-1 border-gray-600"
+                            className="border-2 rounded-full p-1 text-white border-white"
                             strokeWidth={1}
                         />
                     )}

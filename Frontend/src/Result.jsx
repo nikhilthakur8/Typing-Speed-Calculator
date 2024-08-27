@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-
+import { useEffect, useState } from "react";
+// eslint-disable-next-line react/prop-types
 export const Result = ({ wpm, cpm, error, accuracy, setPageOpen }) => {
     const response = [
         `Please stop Playing, start Typing!`,
