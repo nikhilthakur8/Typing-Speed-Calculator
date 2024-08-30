@@ -323,15 +323,15 @@ function App() {
                             </span>
                         </div>
                     </div>
-                    {/* <div className="h-0.5 w-full bg-gray-300"></div>
+                    <div className="h-0.5 w-full bg-gray-300"></div>
                     <a
                         href="https://twitter.com/nikhilthakur80"
                         target="_blank"
                         className="font-mono block pt-5 text-blue-500 hover:underline"
                     >
-                        @nikhilThakur80
+                        
                     </a>
-                </div> */}
+                </div> 
                 {/*Right Part  */}
                 <div className="md:col-span-2  col-span-1 border-l-2 text-white flex flex-col  items-center my-20 space-y-5 text-lg text-center">
                     <div>
